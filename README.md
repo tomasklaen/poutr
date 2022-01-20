@@ -32,22 +32,16 @@ import {Router, Switch, Route, RouteProps, Redirect, useParams, createBrowserHis
 
 // Main App component
 function App() {
+	// Switch renders first component whose path expression matches current path.
+	// Following are all supported Route, Redirect, or direct component children.
 	return (
-		{/* Renders first component whose path expression matches current path */}
 		<Switch>
 			<Route path={/^\/$/} component={Homepage} />
-			{/* Alternative */}
 			<Route path={/^\//}>
 				<Homepage />
 			</Route>
-
-			{/* The power of expressions, match whatever you need! */}
 			<Route path={/^\/(?<category>player|coach)\/(?<id>\w+)$/} component={User} />
-
-			{/* Redirect some aliases to homepage */}
 			<Redirect path={/^\/(some|aliases|of|homepage)(\/.*)?$/} to="/" />
-
-			{/* You can use components as routes as well */}
 			<NotFound path={/.*/} />
 		</Switch>
 	);
@@ -111,6 +105,8 @@ interface Location {
 
 **NOTE**: the `href` property contains only `path` + `search` + `hash` parts. It does NOT contain domain, protocol or anything else. These are the only parts router is concerned about. It also provides consistency between different history providers (hash and memory don't have domains).
 
+---
+
 ### History
 
 ```ts
@@ -150,6 +146,8 @@ History interface returned by all `create{Type}History()` functions. Props:
 -   **unsubscribe**: Alternative to using a disposer.
 -   **destroy**: Destroy current browser history instance. Unsubscribes all listeners, stops listening to window history events, etc.
 
+---
+
 ### createBrowserHistory
 
 ```ts
@@ -157,6 +155,8 @@ function createBrowserHistory(options?: {window?: Window} = {}): History;
 ```
 
 Creates a history interface that attaches itself to current (or provided) `window.history`.
+
+---
 
 ### createHashHistory
 
@@ -168,6 +168,8 @@ Creates a history interface that attaches itself to current (or provided) `windo
 
 Even though these routes are store in a hash, they can have their own hash as well. This is accomplished by delimiting path+search and hash parts of the url with `hashSubstitute` character, which is by default `\uFF03` (a full width number sign: `＃`, similar to hash but not hash).
 
+---
+
 ### createMemoryHistory
 
 ```ts
@@ -177,6 +179,8 @@ function createMemoryHistory(options?: {initial?: string; window?: Window} = {})
 Creates a history that lives in a `state` property of a tiny internally mocked `window.history` interface. This allows not only easier testing, but in environments such as Electron apps, you can pass a current `window` object, and memory history will tap into its `history.state` and its events, which provides seamless integration with native navigation methods such as mouse forward/backward buttons with no extra effort.
 
 This works because in Electron apps, we can't change current location, or even it's hash without weird side effects (hence why we need to use memory history), but we can still trigger navigation events and set new history states by setting new `state` data for current path.
+
+---
 
 ### `<Router>`
 
@@ -198,6 +202,8 @@ Example:
 	<App />
 </Router>
 ```
+
+---
 
 ### `<Route>`
 
@@ -245,6 +251,8 @@ function Foo({match}: RouteProps) {
 }
 ```
 
+---
+
 ### `<Switch>`
 
 A component that renders only the first child component whose `path` expression matches the current path. All child components have to have a `path` property that has to be a RegExp.
@@ -265,6 +273,8 @@ When using custom components, you can use `RouteProps` type helper to type their
 ```ts
 function CustomComponent(props: RouteProps) {}
 ```
+
+---
 
 ### `<Redirect>`
 
@@ -290,6 +300,8 @@ Accepts `path` property so that it can be used inside `<Switch>`.
 
 Use `state` to attach data to new path's state.
 
+---
+
 ### `<Link>`
 
 A convenience component that renders a simple anchor link to a destination.
@@ -314,6 +326,8 @@ Example:
 
 There is no support for active class or anything of the sorts. I find that often when writing components that need active class to be set, the try-to-do-it-all `<Link>` components of other routers are insufficient, and their API limiting. It's always better to just make a new component, and use `useLocation()` hook to determine active class and trigger navigation. Way more control over everything that way.
 
+---
+
 ### useHistory
 
 ```ts
@@ -323,6 +337,8 @@ function useHistory(): History;
 Returns `History` instance provided by the closest parent `<Router>` component.
 
 Using this hook **won't** trigger re-renders of current component when history changes. You are just retrieving the history object, no subscriptions to anything are happening here.
+
+---
 
 ### useLocation
 
@@ -334,6 +350,8 @@ type Navigate = (newPath: string) => void;
 Returns current `Location`, a `Navigation` setter to navigate to a new one, and for convenience a `History` object as well.
 
 This hook subscribes to history changes, and will cause the component to re-render every time the current `Location` changes.
+
+---
 
 ### useParams
 
@@ -361,6 +379,8 @@ Usage:
 ```tsx
 <Route path={/^\/foo\/(?<id>\w+)/} component={Foo} />
 ```
+
+---
 
 ## Notable behavior
 
