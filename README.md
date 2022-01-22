@@ -4,14 +4,15 @@ Simple and tiny routing library for preact.
 
 Features:
 
--   Tiny, <1.5KB min, <1KB gz. ([bundlephobia](https://bundlephobia.com/package/poutr) sizes include all 3 history drivers, 2 of them will get shaken away)
+-   Tiny, ~2KB min, ~1KB gz. ([bundlephobia](https://bundlephobia.com/package/poutr) sizes include all 3 history drivers, 2 of them will be shaken away)
 -   Regular expressions with named capture groups as path identifiers.
 -   History drivers for browser history, browser hash, and memory.
 -   Memory driver can seamlessly integrate with all native navigation methods like mouse back/forward buttons. Useful in environments like Electron apps.
+-   Fully typed.
 
 Requirements:
 
--   RegExp named capture groups: 92.14% as of January 2022 (Edge 78+)
+-   RegExp named capture groups: 92.14% browser support as of January 2022 (Edge 78+)
     -   Not strictly a requirement since `@babel/plugin-transform-named-capturing-groups-regex` exists.
     -   _Router works without this, but you can't conveniently name and consume the groups captured by path expressions._
 -   Function components only. It _should_ work for classes as well, but these are not tested or supported.
@@ -85,6 +86,10 @@ render(
 	document.querySelector('#app')
 );
 ```
+
+## Examples
+
+TodoMVC using preact, [statin](https://github.com/tomasklaen/statin), and poutr: https://codesandbox.io/s/todomvc-preact-statin-poutr-b1s45
 
 ## API
 
