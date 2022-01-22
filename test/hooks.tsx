@@ -111,15 +111,16 @@ test(`useParams() provides params matched by parent <Route>`, async (t) => {
 
 	render(
 		<Router history={history}>
-			<Route path={/\/(?<id>.*)/}>
+			<Route path={/^\/(?<id>.*)$/} component={Check} />
+			<Route path={/^\/(?<id>.*)$/}>
 				<Check />
 			</Route>
 		</Router>,
 		container
 	);
 
-	await waitFor(() => assert.equal(container.innerHTML, 'foo'));
+	await waitFor(() => assert.equal(container.innerHTML, 'foofoo'));
 	history.push('/bar');
-	await waitFor(() => assert.equal(container.innerHTML, 'bar'));
+	await waitFor(() => assert.equal(container.innerHTML, 'barbar'));
 	t.pass();
 });

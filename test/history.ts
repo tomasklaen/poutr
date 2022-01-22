@@ -223,6 +223,13 @@ test(`createBrowserHistory() attaches itself to location path`, (t) => {
 	t.is(history.location.path, '/');
 });
 
+test(`createHashHistory() picks up from current hash`, (t) => {
+	const window = createWindowSubset();
+	window.history.pushState(null, '', '#/foo');
+	const history = createHashHistory({window});
+	t.is(history.location.path, '/foo');
+});
+
 test(`createHashHistory() attaches itself to location hash`, (t) => {
 	const window = createWindowSubset();
 	const history = createHashHistory({window});
