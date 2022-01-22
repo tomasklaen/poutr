@@ -1,6 +1,6 @@
 {
 	"name": "poutr",
-	"version": "0.0.0",
+	"version": "1.0.0",
 	"description": "Simple and tiny router for Preact.",
 	"homepage": "https://github.com/tomasklaen/poutr",
 	"bugs": "https://github.com/tomasklaen/poutr/issues",
